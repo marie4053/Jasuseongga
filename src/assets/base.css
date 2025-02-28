@@ -5,6 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @import 'tailwindcss';
+
+
 @theme {
   --color-*: initial;
   --color-main-600: #b83700;
