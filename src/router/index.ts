@@ -24,6 +24,21 @@ const router = createRouter({
       component: SubscriptionView,
     },
     {
+      path: '/subscription/calendar',
+      name: 'subscription-calendar',
+      component: () => import('@/views/SubscriptionCalendarView.vue'),
+    },
+    {
+      path: '/subscription/:id',
+      name: 'subscription-detail',
+      component: () => import('@/views/SubscriptionDetailView.vue'),
+    },
+    {
+      path: '/subscription/news',
+      name: 'subscription-news',
+      component: () => import('@/views/SubscriptionNewsView.vue'),
+    },
+    {
       path: '/recipe',
       name: 'recipe',
       component: RecipeView,
