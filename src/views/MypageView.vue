@@ -11,8 +11,6 @@ import { getUserScrapList } from "@/apis/userService"; // ✅ 유저별 스크�
 import BookmarkButton from '@/components/BookmarkButton.vue';
 import { toggleScrap } from "@/apis/userService";
 
-
-
 const router = useRouter();
 const cultureStore = useCultureStore();
 
@@ -41,171 +39,193 @@ const subCategories = [
   { name: "기타행사", code: "A02081300" },
 ];
 
-const getCategoryName = (code: string) => {
+  // 🔹 동네 리뷰 게시글 데이터
+  const communityPostList = ref([
+    {
+      image: '/recipe/recipe_popular2.webp',
+      title: '자취생이 가볍게 즐길 수 있는 문화생활 뭐가 있을까요?',
+      content: '자취를 시작하고 나서 주말마다 너무 심심해요...',
+      dong: '신림동',
+      tags: ['문화생활', '취미'],
+      bookmarks: 5,
+      comments: 4,
+    },
+    {
+      image: '/recipe/recipe_popular3.webp',
+      title: '집 근처 조용한 카페 추천해주세요!',
+      content: '집에서 공부하려니 너무 집중이 안 되네요...',
+      dong: '강남구',
+      tags: ['카페', '스터디'],
+      bookmarks: 3,
+      comments: 2,
+    },
+    {
+      title: '맛있는 배달 음식 추천 좀 해주세요!',
+      content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
+      dong: '홍대',
+      tags: ['배달음식', '맛집'],
+      bookmarks: 7,
+      comments: 5,
+    },
+    {
+      title: '맛있는 배달 음식 추천 좀 해주세요!',
+      content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
+      dong: '홍대',
+      tags: ['배달음식', '맛집'],
+      bookmarks: 7,
+      comments: 5,
+    },
+    {
+      title: '맛있는 배달 음식 추천 좀 해주세요!',
+      content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
+      dong: '홍대',
+      tags: ['배달음식', '맛집'],
+      bookmarks: 7,
+      comments: 5,
+    },
+    {
+      title: '맛있는 배달 음식 추천 좀 해주세요!',
+      content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
+      dong: '홍대',
+      tags: ['배달음식', '맛집'],
+      bookmarks: 7,
+      comments: 5,
+    },
+  ]);
+
+
+  const postList = [
+    {
+      image: '/images/community/community_resale_dummy.jpg',
+      title: '상태 좋은 의자 판매합니다.',
+      price: '50000',
+      dong: '수유1동',
+      available: true,
+    },
+    {
+      image: '/images/community/community_resale_dummy.jpg',
+      title: '상태 좋은 의자 판매합니다.',
+      price: '50000',
+      dong: '수유1동',
+      available: true,
+    },
+    {
+      image: '/images/community/community_resale_dummy.jpg',
+      title: '상태 좋은 의자 판매합니다.',
+      price: '50000',
+      dong: '수유1동',
+      available: false,
+    },
+    {
+      image: '/images/community/community_resale_dummy.jpg',
+      title: '상태 좋은 의자 판매합니다.',
+      price: '50000',
+      dong: '수유1동',
+      available: true,
+    },
+    {
+      image: '/images/community/community_resale_dummy.jpg',
+      title: '상태 좋은 의자 판매합니다.',
+      price: '50000',
+      dong: '수유1동',
+      available: true,
+    },
+    {
+      image: '/images/community/community_resale_dummy.jpg',
+      title: '상태 좋은 의자 판매합니다.',
+      price: '50000',
+      dong: '수유1동',
+      available: true,
+    },
+    {
+      image: '/images/community/community_resale_dummy.jpg',
+      title: '상태 좋은 의자 판매합니다.',
+      price: '50000',
+      dong: '수유1동',
+      available: true,
+    },
+  ];
+
+  const recipeList = [
+    {
+      name: '저염된장 삼치구이',
+      image: '/recipe/recipe_popular1.webp',
+      author: {profileImg: '/images/user1.png', name: '자취생A'},
+      tag: '한식',
+    },
+    {
+      name: '참나물 소보로 덮밥',
+      image: '/recipe/recipe_popular2.webp',
+      author: {profileImg: '/images/user2.png', name: '자취생B'},
+      tag: '덮밥',
+    },
+    {
+      name: '코코넛워터 토마토카레',
+      image: '/recipe/recipe_popular3.webp',
+      author: {profileImg: '/images/user3.png', name: '자취생C'},
+      tag: '퓨전',
+    },
+    {
+      name: '저염된장 삼치구이',
+      image: '/recipe/recipe_popular1.webp',
+      author: {profileImg: '/images/user1.png', name: '자취생A'},
+      tag: '한식',
+    },
+    {
+      name: '참나물 소보로 덮밥',
+      image: '/recipe/recipe_popular2.webp',
+      author: {profileImg: '/images/user2.png', name: '자취생B'},
+      tag: '덮밥',
+    },
+    {
+      name: '코코넛워터 토마토카레',
+      image: '/recipe/recipe_popular3.webp',
+      author: {profileImg: '/images/user3.png', name: '자취생C'},
+      tag: '퓨전',
+    },
+  ];
+  const goToCultureDetail = (contentId) => {
+  router.push(`/culture/${contentId}`);
+};
+const formatDate = (dateString: string) => {
+  if (!dateString || dateString.length !== 8) return "날짜 미정"; // 예외 처리
+  return `${dateString.substring(0, 4)}.${dateString.substring(4, 6)}.${dateString.substring(6, 8)}`;
+};
+  const getCategoryName = (code: string) => {
   const category = subCategories.find((sub) => sub.code === code);
   return category ? category.name : "기타";
 };
-const userStore = useUserStore()
-const userInfo = ref()
-const nickname = ref('도형');
-const userId = ref('lee123so');
-const followers = ref(125);
-const following = ref(125);
-const bio = ref(
-  `안녕하세요! 🏡 자취 3년 차, 이제는 라면 하나도 예술처럼 끓이는 자취생입니다.
-  안녕하세요! 🏡 자취 3년 차, 이제는 라면 하나도 예술처럼 끓이는 자취생입니다.
-  안녕하세요! 🏡 자취 3년 차, 이제는 라면 하나도 예술처럼 끓이는 자취생입니다.
-  안녕하세요! 🏡 자취 3년 차, 이제는 라면 하나도 예술처럼 끓이는 자취생입니다.
-🍜 `
-);
+  // 현재 페이지에 맞게 데이터 필터링
+  const paginatedRecipes = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage;
+    return recipeList.slice(start, start + itemsPerPage);
+  });
 
-const selectedTab = ref('동네리뷰'); // 기본 탭
-const currentPage = ref(1);
-const itemsPerPage = 12;
+  const openModal = (category: string) => {
+    showModal.value = true;
+    followCategory.value = category;
+  };
 
+  const closeModal = () => {
+    showModal.value = false;
+    followCategory.value = '';
+  };
 
-// 🔹 동네 리뷰 게시글 데이터
-const communityPostList = ref([
-  {
-    image: '/recipe/recipe_popular2.webp',
-    title: '자취생이 가볍게 즐길 수 있는 문화생활 뭐가 있을까요?',
-    content: '자취를 시작하고 나서 주말마다 너무 심심해요...',
-    dong: '신림동',
-    tags: ['문화생활', '취미'],
-    bookmarks: 5,
-    comments: 4,
-  },
-  {
-    image: '/recipe/recipe_popular3.webp',
-    title: '집 근처 조용한 카페 추천해주세요!',
-    content: '집에서 공부하려니 너무 집중이 안 되네요...',
-    dong: '강남구',
-    tags: ['카페', '스터디'],
-    bookmarks: 3,
-    comments: 2,
-  },
-  {
-    title: '맛있는 배달 음식 추천 좀 해주세요!',
-    content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
-    dong: '홍대',
-    tags: ['배달음식', '맛집'],
-    bookmarks: 7,
-    comments: 5,
-  },
-  {
-    title: '맛있는 배달 음식 추천 좀 해주세요!',
-    content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
-    dong: '홍대',
-    tags: ['배달음식', '맛집'],
-    bookmarks: 7,
-    comments: 5,
-  },
-  {
-    title: '맛있는 배달 음식 추천 좀 해주세요!',
-    content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
-    dong: '홍대',
-    tags: ['배달음식', '맛집'],
-    bookmarks: 7,
-    comments: 5,
-  },
-  {
-    title: '맛있는 배달 음식 추천 좀 해주세요!',
-    content: '매번 똑같은 배달음식만 먹어서 새로운 거...',
-    dong: '홍대',
-    tags: ['배달음식', '맛집'],
-    bookmarks: 7,
-    comments: 5,
-  },
-]);
+  // const handlePageChange = (page: number) => {
+  //   currentPage.value = page;
+  // };
 
-const postList = [
-  {
-    image: '/images/community/community_resale_dummy.jpg',
-    title: '상태 좋은 의자 판매합니다.',
-    price: '50000',
-    dong: '수유1동',
-    available: true,
-  },
-  {
-    image: '/images/community/community_resale_dummy.jpg',
-    title: '상태 좋은 의자 판매합니다.',
-    price: '50000',
-    dong: '수유1동',
-    available: true,
-  },
-  {
-    image: '/images/community/community_resale_dummy.jpg',
-    title: '상태 좋은 의자 판매합니다.',
-    price: '50000',
-    dong: '수유1동',
-    available: false,
-  },
-  {
-    image: '/images/community/community_resale_dummy.jpg',
-    title: '상태 좋은 의자 판매합니다.',
-    price: '50000',
-    dong: '수유1동',
-    available: true,
-  },
-  {
-    image: '/images/community/community_resale_dummy.jpg',
-    title: '상태 좋은 의자 판매합니다.',
-    price: '50000',
-    dong: '수유1동',
-    available: true,
-  },
-  {
-    image: '/images/community/community_resale_dummy.jpg',
-    title: '상태 좋은 의자 판매합니다.',
-    price: '50000',
-    dong: '수유1동',
-    available: true,
-  },
-  {
-    image: '/images/community/community_resale_dummy.jpg',
-    title: '상태 좋은 의자 판매합니다.',
-    price: '50000',
-    dong: '수유1동',
-    available: true,
-  },
-];
+  watchEffect(async () => {
 
-const recipeList = [
-  { name: '저염된장 삼치구이', image: '/recipe/recipe_popular1.webp', author: { profileImg: '/images/user1.png', name: '자취생A' }, tag: '한식' },
-  { name: '참나물 소보로 덮밥', image: '/recipe/recipe_popular2.webp', author: { profileImg: '/images/user2.png', name: '자취생B' }, tag: '덮밥' },
-  { name: '코코넛워터 토마토카레', image: '/recipe/recipe_popular3.webp', author: { profileImg: '/images/user3.png', name: '자취생C' }, tag: '퓨전' },
-  { name: '저염된장 삼치구이', image: '/recipe/recipe_popular1.webp', author: { profileImg: '/images/user1.png', name: '자취생A' }, tag: '한식' },
-  { name: '참나물 소보로 덮밥', image: '/recipe/recipe_popular2.webp', author: { profileImg: '/images/user2.png', name: '자취생B' }, tag: '덮밥' },
-  { name: '코코넛워터 토마토카레', image: '/recipe/recipe_popular3.webp', author: { profileImg: '/images/user3.png', name: '자취생C' }, tag: '퓨전' },
-];
-
-const cultureList = ref([
-  {
-    title: '서울문화재단 - 예술인 지원 프로그램',
-    description: '서울에서 활동하는 예술인들을 위한 다양한 지원 프로그램!',
-    image: '/images/culture/culture_1.jpg',
-    link: '/culture/1',
-  },
-  {
-    title: '서울시립미술관 전시회 안내',
-    description: '서울시립미술관에서 열리는 다양한 전시회 정보를 확인해보세요.',
-    image: '/images/culture/culture_2.jpg',
-    link: '/culture/2',
-  },
-  {
-    title: '무료 클래식 콘서트',
-    description: '서울시 주최 무료 클래식 음악 콘서트 일정',
-    image: '/images/culture/culture_3.jpg',
-    link: '/culture/3',
-  },
-]);
-
-
+    await userStore.getUser(routeId);
+    userInfo.value = userStore.userInfo;
+    userFollowerInfo.value = userStore.followerInfo;
+    userFollowingInfo.value = userStore.followingInfo;
+    console.log(userInfo.value);
+  });
 // 현재 페이지에 맞게 데이터 필터링
-const paginatedRecipes = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return recipeList.slice(start, start + itemsPerPage);
-});
+
+
 const totalCulturePages = computed(() => {
   console.log("📝 현재 스크랩된 문화생활 개수:", cultureStore.bookmarkedFestivals?.length);
   return Math.ceil((cultureStore.bookmarkedFestivals?.length || 0) / itemsPerPage);
@@ -266,53 +286,75 @@ const isBookmarked = (contentId) => {
   return cultureStore.bookmarkedFestivals.some(festival => festival.content_id === contentId);
 };
 
+
 </script>
-
-
 
 <template>
   <div class="w-full container pt-24">
-    <div class=" mx-auto mt-4">
+
+    <div class="mx-auto mt-4">
       <!-- 내 정보 박스 -->
-      <div class="w-full bg-white  rounded-lg p-6 flex items-center justify-between relative">
+      <div class="w-full bg-white rounded-lg p-6 flex items-center justify-between relative">
         <!-- 프로필 이미지 & 유저 정보 -->
         <div class="flex items-center gap-12">
-          <div class="relative w-[300px] h-[300px] rounded-full overflow-hidden bg-gray-200 border border-mono-200">
+          <div
+            class="relative w-[300px] h-[300px] rounded-full overflow-hidden bg-gray-200 border border-mono-200"
+          >
             <img
-            src="/public//images/mypage/mypage_default_img.png"
+              :src="userInfo?.image ?? defaultImage"
+
               alt="Profile"
               class="w-full h-full object-cover"
             />
           </div>
           <div class="w-[800px]">
-            <p class="text-[28px] font-medium text-mono-900">{{ userInfo?.fullName.name }}님 안녕하세요</p>
+            <p class="text-[28px] font-medium text-mono-900">
+              {{ userInfo?.fullName.name }}님 안녕하세요
+            </p>
             <p class="text-[16px] text-mono-600">{{ userInfo?.email }}</p>
-            <div class="flex items-center gap-4 mt-2 py-2 ">
-              <div class="text-mono-900 font-medium flex items-center gap-2"><span class="text-2xl">{{ userInfo?.followers.length }}</span> <p class="text-mono-400 font-normal">팔로워</p> </div>
-              <div class="text-mono-900 font-medium flex items-center gap-2"><span class="text-2xl">{{ userInfo?.following.length }}</span> <p class="text-mono-400 font-normal">팔로잉</p></div>
+            <div class="flex items-center gap-4 mt-2 py-2">
+              <div
+                @click="openModal('follower')"
+                class="text-mono-900 font-medium flex items-center gap-2"
+              >
+                <span class="text-2xl">{{ userInfo?.followers.length }}</span>
+                <p class="text-mono-400 font-normal">팔로워</p>
+              </div>
+              <div
+                @click="openModal('following')"
+                class="text-mono-900 font-medium flex items-center gap-2"
+              >
+                <span class="text-2xl">{{ userInfo?.following.length }}</span>
+                <p class="text-mono-400 font-normal">팔로잉</p>
+              </div>
             </div>
             <!-- 자기 소개 -->
             <div class="mt-4 w-full">
+              <p class="text-mono-600 text-wrap text-[16px]">{{ bio }}</p>
 
-              <p  class="text-mono-600 text-wrap text-[16px]">{{ bio }}</p>
             </div>
           </div>
         </div>
 
         <!-- 수정 & 알림 버튼 -->
-        <div class="absolute top-6 right-6 flex gap-4">
-          <button @click="toggleEdit" class="w-[20px] h-[20px]">
-            <img v-if="!isEditing" src="/images/mypage/edit.png" alt="Edit" class="w-full h-full object-contain" />
-            <img v-else src="/images/mypage/edit.png" alt="Save" class="w-full h-full object-contain" />
+        <div v-if="routeId === id" class="absolute top-6 right-6 flex gap-4">
+          <button @click="router.push('/mypage/user-update')" class="w-[20px] h-[20px]">
+            <img src="/images/mypage/edit.png" alt="Edit" class="w-full h-full object-contain" />
           </button>
           <button class="w-[20px] h-[20px]">
             <img src="/images/mypage/alert.png" alt="Alert" class="w-full h-full object-contain" />
+          </button>
+        </div>
+        <div v-else class="absolute top-6 right-6 flex gap-4">
+          <button @click="router.push('/mypage/user-update')" class="w-[120px] text-main-50 cursor-pointer hover:bg-main-400/80 bg-main-400 py-2 rounded-md">
+           <span class="text-md ">팔로우</span>
           </button>
         </div>
       </div>
 
       <!-- 나의 스크랩 -->
       <div class="mt-12">
+
         <h2 class="text-[32px] font-semibold text-mono-900">나의 스크랩</h2>
 
       <!-- 기존 탭 -->
@@ -327,7 +369,6 @@ const isBookmarked = (contentId) => {
           {{ tab }}
         </button>
       </div>
-
         <!-- 탭 컨텐츠 -->
         <div class="mt-6">
           <!-- 동네 리뷰 탭 -->
@@ -384,8 +425,8 @@ const isBookmarked = (contentId) => {
           <div class="mt-6">
             <!-- ✅ 문화생활 탭 추가 -->
             <div v-if="selectedTab === '문화생활'" class="grid grid-cols-3 gap-4 w-full">
-              <div 
-                v-for="(festival, index) in paginatedFestivals" 
+              <div
+                v-for="(festival, index) in paginatedFestivals"
                 :key="index"
                 class="p-4 rounded-lg shadow border border-mono-300 cursor-pointer"
                 @click="goToCultureDetail(festival.content_id)"
@@ -396,7 +437,6 @@ const isBookmarked = (contentId) => {
                 <p class="text-sm text-mono-600 flex items-center">
                   <span class="w-2 h-2 bg-main-400 rounded-full mr-2"></span>{{ getCategoryName(festival.category3) }}
                 </p>
-
                 <!-- ✅ BookmarkButton 크기 제한 적용 -->
                 <BookmarkButton 
                   :isBookmarked="isBookmarked(festival.content_id)" 
@@ -424,11 +464,19 @@ const isBookmarked = (contentId) => {
             </div>
           </div>
           <!-- 페이지네이션 추가 -->
-          <PaginationComponent 
-            :totalPages="totalCulturePages" 
-            :currentPage="currentPage"
-            @pageChange="handlePageChange" 
-          />
+          <PaginationComponent :totalPages="totalPages" @pageChange="handlePageChange" />
+          <Modal :isOpen="showModal" @close="closeModal">
+            <FollowComponent
+              v-if="followCategory === 'follower'"
+              :items="userFollowerInfo"
+              title="팔로워"
+            />
+            <FollowComponent
+              v-if="followCategory === 'following'"
+              :items="userFollowingInfo"
+              title="팔로잉"
+            />
+          </Modal>
         </div>
       </div>
     </div>
