@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import DoughnutChart from '@/components/recipe/DoughnutChart.vue';
+  import RecipeMainBanner from '@/components/recipe/RecipeMainBanner.vue';
   import RecipePostList from '@/components/recipe/RecipePostList.vue';
   import RecipeRectangleCard from '@/components/recipe/RecipeRectangleCard.vue';
   import RecipeSquareCard from '@/components/recipe/RecipeSquareCard.vue';
@@ -57,11 +58,11 @@
       '소고기 들깨 알토란탕은 고소한 들깨가루와 부드러운 소고기, 그리고 특유의 식감이 일품인 알토란을 주재료로 한 영양가 높은 한식 탕입니다. 알토란의 아삭한 식감과 들깨의 고소함이 어우러져 깊은 맛을 내며, 소고기의 감칠맛이 국물에 배어 풍미를 더합니다.',
     image: '/images/recipe/recipe_todays.webp',
     nutrition: {
-      calories: 146.42,
-      sodium: 675.68,
-      protein: 7.57,
+      calories: 300.42,
+      sodium: 400.68,
+      protein: 16.57,
       fat: 5.17,
-      carbohydrates: 17.4,
+      carbohydrates: 50.4,
     },
   };
   const popularRecipeData = [
@@ -105,23 +106,7 @@
 
 <template>
   <!-- 배너 -->
-  <div class="w-full h-[562px] overflow-hidden">
-    <div class="bg-[url(/images/recipe/recipe_main_banner.webp)] w-full h-full bg-cover bg-center">
-      <div class="w-full h-full bg-mono-900/30 flex place-content-center">
-        <div class="flex flex-col gap-10 justify-center">
-          <!-- 타이틀 -->
-          <div>
-            <div class="text-[40px] text-mono-050 leading-[52px]">혼자 살아도 건강하게!</div>
-            <div class="text-[48px] font-bold text-mono-050 leading-16">
-              자취생을 위한 영양만점 레시피
-            </div>
-          </div>
-          <!-- 검색바 -->
-          <SearchBarRounded long @search="handleSearch" />
-        </div>
-      </div>
-    </div>
-  </div>
+  <RecipeMainBanner />
   <div class="container flex flex-col gap-[100px] py-[100px]">
     <!-- 카테고리별 레시피 -->
     <div class="flex flex-col gap-[28px]">
