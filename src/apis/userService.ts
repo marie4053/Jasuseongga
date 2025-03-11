@@ -222,3 +222,46 @@ export async function updateUserProfile(formData: FormData) {
   }
   return response.data;
 }
+export async function postFollow(id:string){
+  const response = await axiosApi.post(`${apiRoot}/follow/create`,{userId:id});
+  console.log(response);
+  if (response.status !== 200) {
+    throw 'state : ' + response.status;
+  }
+  return response.data;
+}
+export async function deleteFollow(id:string){
+  const response = await axiosApi.delete(`${apiRoot}/follow/delete`,{
+    data: {id: id},
+  });
+  console.log(id);
+  if (response.status !== 200) {
+    throw 'state : ' + response.status;
+  }
+  return response.data;
+}
+export async function updateInfo(payload:{fullName:string}){
+  const response = await axiosApi.put(`${apiRoot}/settings/update-user`,payload);
+  if (response.status !== 200) {
+    throw 'state : ' + response.status;
+  }
+  return response.data;
+}
+export async function updatePasswordInfo(payload:{password:string}){
+  const response = await axiosApi.put(`${apiRoot}/settings/update-password`,payload);
+  if (response.status !== 200) {
+    throw 'state : ' + response.status;
+  }
+  return response.data;
+}
+export async function deleteUser(userId:string){
+  const response = await axiosApi.delete(`${apiRoot}/users/delete-user`,{
+    data: {id: userId},
+  });
+  if (response.status !== 200) {
+    throw 'state : ' + response.status;
+  }
+  return response.data;
+}
+
+
