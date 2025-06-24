@@ -4,16 +4,16 @@
 <img width="1392" alt="스크린샷 2025-06-17 오전 11 58 38" src="https://github.com/user-attachments/assets/9209e596-3630-421b-b3c4-57c260eb4b1c" />
 
 
-### 프로젝트 개요
+### 📌 프로젝트 개요
 <img width="1392" alt="스크린샷 2025-06-17 오전 11 58 49" src="https://github.com/user-attachments/assets/56356013-e7e7-4ed1-8f3e-a9c13b665d93" />
 
-### 기능 리스트
+### 📌 기능 리스트
 <img width="1392" alt="스크린샷 2025-06-24 오후 6 55 23" src="https://github.com/user-attachments/assets/e3d3ab63-21aa-4c04-8223-155b3eb217ee" />
 
-### 기술 스택
+### 📌 기술 스택
 <img width="1392" alt="스크린샷 2025-06-24 오후 6 54 23" src="https://github.com/user-attachments/assets/1aafea5f-e5dd-4353-891d-64a7581ce6f1" />
 
-### 담당 파트
+### 📌 담당 파트
 
 : 레시피 정보 검색 기능(메인, 검색, 상세 페이지)과 정보 공유 커뮤니티 기능 (검색, 목록, 상세, 작성) 담당
 
